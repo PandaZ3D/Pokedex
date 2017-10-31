@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import java.util.ArrayList;
 
@@ -41,10 +42,12 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
         holder.nombreTextView.setText(p.getName());
 
         Glide.with(context)
-                .load("https://raw.githubusercontent.com/PokeAPI/pokeapi" +
-                        "/master/data/Pokemon_XY_Sprites/" + p.getNumber() + ".png")
-                .centerCrop()
-                .crossFade()
+                .load(//"https://raw.githubusercontent.com/PokeAPI/pokeapi" +
+                        //"/master/data/Pokemon_XY_Sprites/" + p.getNumber() + ".png")
+                    "http://www.pokestadium.com/sprites/xy/"+p.getName()+".gif")
+				.asBitmap()
+                .fitCenter()
+                //.crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.fotoImageView);
     }
