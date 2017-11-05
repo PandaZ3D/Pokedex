@@ -10,8 +10,6 @@ public class Pokemon {
     private String name;
     private String url;
 
-    //pokedex entry stuff
-
     public String getName() {
         return name;
     }

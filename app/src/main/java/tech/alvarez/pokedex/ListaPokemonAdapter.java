@@ -1,7 +1,9 @@
 package tech.alvarez.pokedex;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,10 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
 
     private ArrayList<Pokemon> dataset;
     private Context context;
+
+    private int currX, currY;
+    private int minX= 0, minY = 0;
+    private int maxX, maxY;
 
     public ListaPokemonAdapter(Context context) {
         this.context = context;
@@ -42,12 +47,13 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
         holder.nombreTextView.setText(p.getName());
 
         Glide.with(context)
-                .load(//"https://raw.githubusercontent.com/PokeAPI/pokeapi" +
-                        //"/master/data/Pokemon_XY_Sprites/" + p.getNumber() + ".png")
-                    "http://www.pokestadium.com/sprites/xy/"+p.getName()+".gif")
-				.asBitmap()
-                .fitCenter()
+                .load("https://raw.githubusercontent.com/PokeAPI/pokeapi" +
+                        "/master/data/Pokemon_XY_Sprites/" + p.getNumber() + ".png")
+                //    "http://www.pokestadium.com/sprites/xy/"+p.getName()+".gif")
+				 //.asBitmap()
+                //.asGif()
                 //.crossFade()
+
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.fotoImageView);
     }
@@ -71,6 +77,25 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
             super(itemView);
 
             fotoImageView = (ImageView) itemView.findViewById(R.id.fotoImageView);
+            fotoImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent  myIntent =  new Intent(v.getContext(), DexEnteryActivity.class);
+                        context.startActivity(myIntent);
+                    }
+            });
+
+            /*currX = fotoImageView.getWidth();
+            currY = fotoImageView.getHeight();
+            if (currX > minX) {minX = currX;}
+            if (currY > minY) {minY = currY;}
+            maxX = fotoImageView.getMaxWidth();
+            maxY = fotoImageView.getMaxHeight();
+
+            Log.e("CURR",currX+" "+currY);
+            Log.e("MIN",minX+" "+minY);
+            Log.e("MAX",maxX+" "+maxY);
+            */
             nombreTextView = (TextView) itemView.findViewById(R.id.nombreTextView);
         }
     }
